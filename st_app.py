@@ -45,14 +45,17 @@ def scramble_message(message):
 def create_gift_image(text):
     bg_path = "locals/bgforgift.jpg"
     bg_image = Image.open(bg_path).convert("RGBA")
-    
+
     img = bg_image.resize((300, 600))
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("arial.ttf", 28)
+    try:
+        font = ImageFont.truetype("locals/arial.ttf", 28)  # Local font file
+    except:
+        font = ImageFont.load_default()  # fallback
     text_width, text_height = draw.textbbox((0, 0), text, font=font)[2:]
     position = ((img.width - text_width) // 2, (img.height - text_height) // 2)
     draw.text(position, text, fill=(255, 255, 255), font=font)
-    
+
     img_io = io.BytesIO()
     img.save(img_io, format='PNG')
     img_io.seek(0)
@@ -92,7 +95,7 @@ if st.button("🎂 Blow the Candles!"):
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTBzZXl1ajd1b3g1MmphNHJkcTRkN2dmbG56a2JqanRzc3pwbnphYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8PsbWdOLFXXKCaMl2W/giphy.gif" width="300">
     </div>
     """, unsafe_allow_html=True)
-    
+
     play_audio("locals/hbd_intrumental.mp3")
     time.sleep(2)
 
