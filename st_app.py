@@ -70,9 +70,9 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Confetti Button
-if st.button("🎊 Throw Confetti!"):
+if st.button("🎊 Release balloons!"):
     st.balloons()
-    st.success("Woohoo! Enjoy your day!")
+    st.success("Woohoo! You're an adult now!!!")
 
 # Display cake image
 cake_img = Image.open("locals/cakeaileen.png")
