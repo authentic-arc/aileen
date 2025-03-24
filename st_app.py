@@ -234,4 +234,58 @@ if st.session_state.wishes:
         """, unsafe_allow_html=True)
 
 
+# Photobooth
 
+st.title("📸 Photobooth!!")
+# Function to convert PIL image to base64 URL
+def pil_image_to_base64_url(img):
+    img_buffer = io.BytesIO()
+    img.save(img_buffer, format="PNG")
+    img_bytes = img_buffer.getvalue()
+    img_base64 = base64.b64encode(img_bytes).decode()
+    return f"data:image/png;base64,{img_base64}"
+
+st.markdown("""
+<div style="text-align: center;">
+    <h2 style="color: yellow;">🎥 Camera Fun!</h2>
+    <p style="color: white;">Click the button below to open your camera!</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Button to trigger camera
+if st.button("📸 Open Camera"):
+    st.session_state.camera_open = True
+else:
+    st.session_state.camera_open = st.session_state.get("camera_open", False)
+
+# Show camera input if open
+if st.session_state.camera_open:
+    st.markdown("<h4 style='text-align:center;'>Smile! 😄</h4>", unsafe_allow_html=True)
+    
+    img_file = st.camera_input("Take a selfie!")
+
+    if img_file is not None:
+        captured_img = Image.open(img_file)
+        img_url = pil_image_to_base64_url(captured_img)
+
+        st.markdown(f"""
+        div style="text-align:center;">
+            <h4>Your captured photo:</h4>
+            <img src="{img_url}" width="300">
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Download button
+        img_buffer = io.BytesIO()
+        captured_img.save(img_buffer, format="PNG")
+        img_buffer.seek(0)
+        st.download_button(
+            label="📥 Download Your Photo",
+            data=img_buffer,
+            file_name="captured_photo.png",
+            mime="image/png")
+
+# Optionally, close/reset button
+if st.session_state.get("camera_open", False):
+    if st.button("❌ Close Camera"):
+        st.session_state.camera_open = False
