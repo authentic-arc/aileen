@@ -164,7 +164,8 @@ if st.button("🎁 Guess the phrase"):
         "JDJYDJYDYJDYJ LOVE YOUUUU",
         "GAMBLINGGGG",
         "babygurl",
-        "Jazz. Heals."
+        "Jazz. Heals.",
+        "honestly, SLAY"
     ]
     st.session_state.selected_gift = random.choice(gifts)
     st.session_state.slider_value = 0
