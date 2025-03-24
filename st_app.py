@@ -71,10 +71,6 @@ def slot_machine():
     else:
         st.info(f"Skill issue! Aura points lost: {st.session_state.slot_attempts*100}")
 
-st.markdown("<div style='text-align: center;'><h2>🎰 Birthday Slot Machine 🎰</h2></div>", unsafe_allow_html=True)
-if st.button("Go on, Gamble!"):
-    slot_machine()
-
 
 # Function to scramble message
 def scramble_message(message):
@@ -143,6 +139,12 @@ if st.button("reveal bday cat"):
     st.image("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif", width=300)
     st.success("You are purrfect")
 
+#slot machine
+with st.expander("🎰 Try Your Luck: Birthday Slot Machine! 🎰", expanded=False):
+    st.markdown("<div style='text-align: center;'><h3>Spin and win a birthday surprise!</h3></div>", unsafe_allow_html=True)
+    if st.button("Go on, Gamble!"):
+        slot_machine()
+        
 # Surprise Gift Box logic
 if "selected_gift" not in st.session_state:
     st.session_state.selected_gift = None
