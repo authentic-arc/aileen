@@ -141,8 +141,8 @@ if st.button("reveal bday cat"):
 
 #slot machine
 with st.expander("🎰 Try Your Luck: Birthday Slot Machine! 🎰", expanded=False):
-    st.markdown("<div style='text-align: center;'><h3>Spin and win a birthday surprise!</h3></div>", unsafe_allow_html=True)
-    if st.button("Go on, Gamble!"):
+    st.markdown("<div style='text-align: center;'><h3>Go on, Gamble!</h3></div>", unsafe_allow_html=True)
+    if st.button("PLAY"):
         slot_machine()
         
 # Surprise Gift Box logic
