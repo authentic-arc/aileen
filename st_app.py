@@ -4,6 +4,8 @@ import base64
 import random
 from PIL import Image, ImageDraw, ImageFont
 import io
+import json
+import os
 
 # Function to set background
 def set_bg(local_img_path):
@@ -197,5 +199,39 @@ if st.session_state.selected_gift:
         """, unsafe_allow_html=True)
         st.download_button(label="📥 Download Your 'Aileen says...' Card now!", data=img_io, file_name="lil_gift.png", mime="image/png")
         st.markdown("</div>", unsafe_allow_html=True)
+
+if "wishes" not in st.session_state:
+    # Optionally load from file if you want persistence
+    if os.path.exists("wishes.json"):
+        with open("wishes.json", "r") as f:
+            st.session_state.wishes = json.load(f)
+    else:
+        st.session_state.wishes = []
+
+st.markdown("<div style='text-align:center;'><h2>💌 Leave Your Birthday Wish!</h2></div>", unsafe_allow_html=True)
+
+# Input area for wishes
+wish = st.text_area("Write your wish for aileen 👇")
+st.write("sign off with your name <3")
+if st.button("✨ Submit Wish"):
+    if wish.strip() != "":
+        st.session_state.wishes.append(wish.strip())
+        # Save to file for persistence
+        with open("wishes.json", "w") as f:
+            json.dump(st.session_state.wishes, f)
+        st.success("Your wish has been added to the wall! 🎉")
+    else:
+        st.warning("You forgot to write something!")
+
+# Display all wishes
+if st.session_state.wishes:
+    st.markdown("<div style='text-align:center; margin-top:40px;'><h3>🎀 Wishes Wall 🎀</h3></div>", unsafe_allow_html=True)
+    for i, w in enumerate(st.session_state.wishes[::-1], 1):
+        st.markdown(f"""
+        <div style="background-color: rgba(255, 255, 255, 0.85); border-radius: 10px; padding: 10px; margin: 10px 0;">
+            <p style="font-size: 18px; color: #333;">✨ {w}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 
