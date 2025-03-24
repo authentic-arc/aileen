@@ -156,3 +156,41 @@ if st.session_state.selected_gift:
         """, unsafe_allow_html=True)
         st.download_button(label="📥 Download Your 'Aileen says...' Card now!", data=img_io, file_name="lil_gift.png", mime="image/png")
         st.markdown("</div>", unsafe_allow_html=True)
+
+
+
+if "slot_attempts" not in st.session_state:
+    st.session_state.slot_attempts = 0
+if "slot_won" not in st.session_state:
+    st.session_state.slot_won = False
+
+def slot_machine():
+    st.session_state.slot_attempts += 1
+    emojis = ["🎊", "🎂", "🎈", "🎁", "🎉"]
+    
+    # On the 5th try, if not won yet, force jackpot
+    if st.session_state.slot_attempts == 5 and not st.session_state.slot_won:
+        result = ["🎊", "🎊", "🎊"]
+        st.session_state.slot_won = True
+    else:
+        result = [random.choice(emojis) for _ in range(3)]
+        if all(e == "🎊" for e in result):
+            st.session_state.slot_won = True
+    
+    st.markdown(f"<div style='text-align: center; font-size: 80px;'>{''.join(result)}</div>", unsafe_allow_html=True)
+    
+    if all(e == "🎊" for e in result):
+        st.balloons()
+        st.success("🎊 JACKPOT! You got all three! 🎊")
+        st.markdown("""
+            <div style="text-align: center;">
+                <img src="https://images.thortful.com/cdn-cgi/image/width=600,format=auto,quality=90/card/64f9af007d1bd41bf6aaf0ce/64f9af007d1bd41bf6aaf0ce_medium.jpg?version=1" width="300">
+            </div>
+        """, unsafe_allow_html=True)
+        st.session_state.slot_attempts = 0  # reset attempts after success
+    else:
+        st.info(f"Skill issue! Aura points lost: {st.session_state.slot_attempts*100}")
+
+st.markdown("<div style='text-align: center;'><h2>🎰 Birthday Slot Machine 🎰</h2></div>", unsafe_allow_html=True)
+if st.button("Go on, Gamble!"):
+    slot_machine()
