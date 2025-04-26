@@ -248,7 +248,7 @@ def pil_image_to_base64_url(img):
 
 st.markdown("""
 <div style="text-align: center;">
-    <h2 style="color: yellow;">🎥 Camera Fun!</h2>
+    <h2 style="color: yellow;">🎥 Coz we never got to the booth on time </h2>
     <p style="color: white;">Click the button below to open your camera!</p>
 </div>
 """, unsafe_allow_html=True)
