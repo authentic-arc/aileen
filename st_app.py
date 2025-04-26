@@ -212,7 +212,7 @@ if "wishes" not in st.session_state:
 st.markdown("<div style='text-align:center;'><h2>💌 Leave Your Birthday Wish!</h2></div>", unsafe_allow_html=True)
 
 # Input area for wishes
-wish = st.text_area("Write your wish for aileen 👇")
+wish = st.text_area("Write your wish for aileen for the Wishes Wall👇")
 st.write("sign off with your name <3")
 if st.button("✨ Submit Wish"):
     if wish.strip() != "":
